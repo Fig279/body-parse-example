@@ -28,7 +28,19 @@ const getUsers = (request, response) => {
 };
 
 const addUser = (request, response) => {
+
+  responseJSON = {
+    message: "Name and age are both required"
+  };
+
   const {name, age} = request.body
+  if(!name || !age){
+    respondJSON.id = 'Missing Params';
+    return respondJSON(request, response, 400, responseJSON);
+  }
+
+  let status = 204;
+
   console.log(name, age);
 };
 

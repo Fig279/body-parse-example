@@ -5,9 +5,32 @@ const jsonHandler = require('./jsonResponses.js');
 
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
+const parseBody = (request, response, handler) => {
+
+  console.log("PARsING BODY");
+
+  const body = {};
+  request.on('error', (err) => {
+    console.dir(err);
+    response.statusCode = 400
+    response.end();
+  });
+
+  request.on('data', (chunk) => {
+    body.push(chunk);
+  });
+
+  request.on('end', () => {
+    const bodyString = Buffer.concat(body).toString();
+    console.log(bodyString);
+  });
+}
+
+
 const handlePost = (request, response, parsedUrl) => {
-  if(parsedUrl === '/addUser'){
-    jsonHandler.addUser(request, response)
+  if (parsedUrl.pathname === '/addUser') {
+    //jsonHandler.addUser(request, response);
+    parseBody(request, response, jsonHandler.addUser);
   }
 };
 
