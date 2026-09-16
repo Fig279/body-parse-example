@@ -28,7 +28,8 @@ const getUsers = (request, response) => {
 };
 
 const addUser = (request, response) => {
-
+  const {name, age} = request.body
+  console.log(name, age);
 };
 
 module.exports = {

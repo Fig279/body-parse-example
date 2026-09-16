@@ -6,7 +6,9 @@ const jsonHandler = require('./jsonResponses.js');
 const port = process.env.PORT || process.env.NODE_PORT || 3000;
 
 const handlePost = (request, response, parsedUrl) => {
-
+  if(parsedUrl === '/addUser'){
+    jsonHandler.addUser(request, response)
+  }
 };
 
 const handleGet = (request, response, parsedUrl) => {
@@ -23,9 +25,16 @@ const onRequest = (request, response) => {
   const protocol = request.connection.encrypted ? 'https' : 'http';
   const parsedUrl = new URL(request.url, `${protocol}://${request.headers.host}`);
 
+  if (request.method == 'POST') {
+    handlePost(request, response, parsedUrl);
+  } else {
+    // assume it is GET
+    handleGet(request, response, parsedUrl);
+
+  }
 
 };
 
 http.createServer(onRequest).listen(port, () => {
-  console.log(`Listening on 127.0.0.1: ${port}`);
+  console.log(`Listening on 127.0.0.1:${port}`);
 });

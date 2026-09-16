@@ -36,6 +36,7 @@
       const nameForm = document.querySelector('#nameForm');
       
       const addUser = (e) => {
+        // prevents whole page from reloading
         e.preventDefault();
         sendPost(nameForm);
         return false;
